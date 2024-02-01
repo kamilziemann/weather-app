@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, LoaderIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
+import { extractDayAndMonth } from '@/lib/helpers';
 
 const POPOVER_WIDTH = 'w-full max-w-5xl';
 
@@ -44,6 +45,8 @@ export default function Home() {
   }, []);
 
   const displayName = selectedLocation ? selectedLocation.name : 'Select product';
+
+  const selectedForecast = data ? data?.forecast.forecastday[selectedForecastIndex] : null;
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 mt-4 gap-4 max-w-5xl mx-auto">
@@ -91,10 +94,15 @@ export default function Home() {
                 <CarouselNext />
               </Carousel>
             </div>
-            <div className="mt-8">
-              <h1>Pogoda</h1>
-              <ForecastDetails forecast={data.forecast.forecastday[selectedForecastIndex]} />
-            </div>
+            {selectedForecast ? (
+              <div className="mt-8">
+                <h1 className="text-2xl font-semibold text-center mb-8">
+                  {selectedLocation?.name}, {selectedLocation?.country} |{' '}
+                  {extractDayAndMonth(selectedForecast?.date)}
+                </h1>
+                <ForecastDetails forecast={selectedForecast} />
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>

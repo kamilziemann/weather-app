@@ -21,7 +21,7 @@ interface Props extends ForecastDay {
 const ForecastPreviewCard: FC<Props> = ({ date, day, isSelected = false, onClick }) => (
   <Card
     className={cn(
-      'max-w-[200px] h-full flex flex-col justify-between hover:bg-slate-50 cursor-pointer',
+      'max-w-[200px] h-full flex flex-col justify-between hover:bg-slate-50 cursor-pointer select-none',
       isSelected && 'bg-slate-200 border-gray-400 hover:bg-slate-200 cursor-default',
     )}
     onClick={onClick}
