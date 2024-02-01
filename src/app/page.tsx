@@ -3,10 +3,8 @@
 import AlertDestructive from '@/components/AlertDestructive';
 import ForecastDetails from '@/components/ForecastDetails';
 import ForecastPreviewCard from '@/components/ForecastPreviewCard';
-import { Search } from '@/components/Search';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -19,9 +17,10 @@ import api from '@/lib/api';
 import { Location, WeatherReport } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
-import { ChevronsUpDown, LoaderIcon } from 'lucide-react';
+import { ChevronsUpDown, LoaderIcon, MapPin } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { extractDayAndMonth } from '@/lib/helpers';
+import Search from '@/components/Search';
 
 const POPOVER_WIDTH = 'w-full max-w-5xl';
 
@@ -44,12 +43,14 @@ export default function Home() {
     setOpen(false);
   }, []);
 
-  const displayName = selectedLocation ? selectedLocation.name : 'Select product';
+  const displayName = selectedLocation
+    ? `${selectedLocation.name}, ${selectedLocation.country}`
+    : 'Wybierz lokalizację';
 
   const selectedForecast = data ? data?.forecast.forecastday[selectedForecastIndex] : null;
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 mt-4 gap-4 max-w-5xl mx-auto">
+    <main className="flex min-h-screen flex-col items-center p-4 pb-36 mt-4 gap-4 max-w-5xl mx-auto">
       <div className="max-w-5xl w-full">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -59,7 +60,6 @@ export default function Home() {
               className={cn('justify-between', POPOVER_WIDTH)}
             >
               {displayName}
-
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -69,12 +69,18 @@ export default function Home() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="w-full">
+      <div className="w-full flex justify-center">
+        {!selectedLocation ? (
+          <div className="text-center flex flex-col gap-2 items-center  border border-gray-200 p-10 rounded-xl">
+            <MapPin className="h-20 w-20 text-gray-500" />
+            <h2 className="text-2xl text-gray-700">Wybierz lokalizację i sprawdź pogodę!</h2>
+          </div>
+        ) : null}
         {isLoading ? <LoaderIcon className="animate-spin h-24 w-24 mt-4 basis-1/" /> : null}
         {isError ? <AlertDestructive /> : null}
         {data ? (
           <div className="w-full">
-            <div className="max-w-[200px] sm:max-w-[400px] xl:max-w-[600px] 2xl:max-w-[800px] w-full mx-auto">
+            <section className="max-w-[200px] sm:max-w-[400px] xl:max-w-[600px] 2xl:max-w-[800px] w-full mx-auto">
               <Carousel>
                 <CarouselContent>
                   {data.forecast.forecastday.map((props, index) => (
@@ -93,7 +99,7 @@ export default function Home() {
                 <CarouselPrevious />
                 <CarouselNext />
               </Carousel>
-            </div>
+            </section>
             {selectedForecast ? (
               <div className="mt-8">
                 <h1 className="text-2xl font-semibold text-center mb-8">
