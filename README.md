@@ -2,7 +2,7 @@
 
 This is a weather forecast application built with Next.js, utilizing Tailwind CSS for styling and shadcn/ui components for UI elements. It offers a 14-day weather forecast for a selected location.
 
-DEMO:
+DEMO: [https://weather.zkamil.dev/](https://weather.zkamil.dev/)
 
 ![App example](.github/weather-app-example.png)
 
