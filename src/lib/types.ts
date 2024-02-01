@@ -91,7 +91,7 @@ interface Astro {
   is_sun_up: number;
 }
 
-interface ForecastDay {
+export interface ForecastDay {
   date: string;
   date_epoch: number;
   day: DayForecast;
@@ -103,7 +103,7 @@ interface Forecast {
   forecastday: ForecastDay[];
 }
 
-interface WeatherReport {
+export interface WeatherReport {
   location: WeatherLocation;
   current: CurrentWeather;
   forecast: Forecast;
