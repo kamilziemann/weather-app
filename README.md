@@ -4,7 +4,7 @@ This is a weather forecast application built with Next.js, utilizing Tailwind CS
 
 DEMO: [https://weather.zkamil.dev/](https://weather.zkamil.dev/)
 
-![App example](.github/weather-app-example.png)
+![App example](.github/weather-app-example-v2.png)
 
 ## Features
 
